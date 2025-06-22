@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </div>
       
-      <div className='h-[1px] w-full bg-gray-700/70'>
+      <div className='h-[1px] w-full bg-gray-800/70'>
       </div>
     </>
   );

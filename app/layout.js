@@ -24,7 +24,14 @@ export default function RootLayout({ children }) {
 
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-slate-950  `}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-slate-950 max-h-100 overflow-y-auto
+        [&::-webkit-scrollbar]:w-1
+        [&::-webkit-scrollbar-track]:rounded-full
+        [&::-webkit-scrollbar-track]:bg-gray-700/50
+        [&::-webkit-scrollbar-thumb]:rounded-full
+        [&::-webkit-scrollbar-thumb]:bg-gray-300/50
+        dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+        dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 `}
       >
         <SessionWrapper>
           <div className="min-h-[84.96vh] text-white overflow-hidden relative"
@@ -36,7 +43,7 @@ export default function RootLayout({ children }) {
           </div>
           <Footer />
         </SessionWrapper>
-        
+
       </body>
 
     </html>

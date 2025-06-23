@@ -1,8 +1,17 @@
-'use client'
-import React from 'react'
-import { useSession, signIn, signOut } from 'next-auth/react'
+"use client"
+import React, { useEffect } from 'react'
+import { useSession, signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const page = () => {
+    const { data: session, status } = useSession()
+    const router = useRouter()
+
+    useEffect(() => {
+        if (session) {
+            router.replace('/dashboard')
+        }
+    }, [session, router])
     return (
         <div className='container mx-auto mt-8'>
             <h1 className="font-bold text-3xl text-center">Login to get your fans to connect you</h1>

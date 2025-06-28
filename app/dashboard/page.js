@@ -80,7 +80,7 @@ const Dashboard = () => {
     return (
 
         <div className="min-h-[calc(100vh-148px)]  py-12">
-            <div className='container mx-auto'>
+            <div className='md:container md:mx-auto mx-4'>
                 <h1 className='font-bold text-4xl text-center text-white mb-8 drop-shadow-lg'>Welcome to your Dashboard</h1>
                 <div className="max-w-lg mx-auto bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 flex flex-col gap-6 border border-white/20">
                     <div className='flex flex-col gap-2'>

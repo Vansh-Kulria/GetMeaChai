@@ -7,10 +7,10 @@ export default function Home() {
   const { data: session, status } = useSession();
   return (
     <>
-      <div className="flex flex-col gap-1 justify-center h-52 items-center text-white">
+      <div className="flex flex-col gap-2 justify-center h-[45vh] items-center text-white md:container md:mx-auto mx-6">
         <div className='font-bold text-3xl '>Buy Me a Chai</div>
-        <p className='text-gray-300'>A crowdfunding Platform for creators. Get funded by your fans and followers. <span className="text-lg font-bold text-white" >Start Now</span></p>
-        <div className='flex gap-2 mt-4'>
+        <p className='text-gray-300 text-center'>A crowdfunding Platform for creators. Get funded by your fans and followers. <span className="text-lg font-bold text-white" >Start Now</span></p>
+        <div className='flex md:flex-row gap-2 mt-4'>
           {status === "authenticated" && session?.user ? (
             <div className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl
                 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2
@@ -47,7 +47,7 @@ export default function Home() {
 
       <div className="text-white container mx-auto pb-14 pt-14 px-10">
         <h2 className="text-3xl font-bold text-center mb-14">Your Fans can buy you a Chai</h2>
-        <div className="flex gap-5 justify-around">
+        <div className="flex flex-col md:flex-row gap-10 md:gap-5 justify-around">
           <div className="item space-y-3 flex flex-col items-center justify-center">
             <img className="bg-slate-400/30 rounded-full p-2 text-black" width={88} src="/man.gif" alt="" />
             <p className="font-bold text-center">Fans want to help</p>

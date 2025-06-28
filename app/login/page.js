@@ -15,7 +15,7 @@ const page = () => {
         }
     }, [session, router])
     return (
-        <div className='container mx-auto mt-8'>
+        <div className='md:container md:mx-auto mx-4 pt-8'>
             <h1 className="font-bold text-3xl text-center">Login to get your fans to connect you</h1>
 
             <div className="social-login-button flex items-center justify-center pt-15 ">

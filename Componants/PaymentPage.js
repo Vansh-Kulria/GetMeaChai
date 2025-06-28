@@ -131,7 +131,7 @@ const PaymentPage = ({ username }) => {
 
             <div>
                 <div className="cover-pic relative w-full ">
-                    <img className='object-cover w-full h-[45vh]' src={currentUser.cover_pic} alt="Cover picture" />
+                    <img className='object-cover w-full h-[40vh] md:h-[45vh]' src={currentUser.cover_pic} alt="Cover picture" />
 
                     <div className='w-full flex justify-center '>
                         <img className="w-20 rounded-full h-20 object-cover absolute -bottom-10 border" src={currentUser.profile_pic} alt="profile picture" />
@@ -153,18 +153,18 @@ const PaymentPage = ({ username }) => {
                     </div>
                 </div>
 
-                <div className='flex max-w-[80vw] mx-auto mt-15 p-2 border rounded-xl gap-3'>
-                    <div className='bg-gray-500/20 min-h-[330px] max-h-[330px] w-1/2 rounded-lg '>
+                <div className='flex md:flex-row flex-col-reverse mx-4 md:container md:mx-auto mt-15 p-2 border rounded-xl gap-3'>
+                    <div className='bg-gray-500/20 min-h-[330px] max-h-[330px] md:w-1/2 rounded-lg '>
 
                         <div className='font-bold px-3 py-2 text-md'>Suppoters</div>
                         <div className='text-gray-400  text-sm pl-5 flex flex-col gap-2 py-2 overflow-auto scroll-smooth max-h-[290px] overflow-y-auto
-          [&::-webkit-scrollbar]:w-[.01px]
-          [&::-webkit-scrollbar-track]:rounded-full
-          [&::-webkit-scrollbar-track]:bg-gray-100
-          [&::-webkit-scrollbar-thumb]:rounded-full
-          [&::-webkit-scrollbar-thumb]:bg-gray-300
-          dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-          dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'>
+                        [&::-webkit-scrollbar]:w-[.01px]
+                        [&::-webkit-scrollbar-track]:rounded-full
+                        [&::-webkit-scrollbar-track]:bg-gray-100
+                        [&::-webkit-scrollbar-thumb]:rounded-full
+                        [&::-webkit-scrollbar-thumb]:bg-gray-300
+                        dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+                        dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'>
 
                             {Payments.length === 0 ? (
                                 <div>No supporters yet.</div>
@@ -180,7 +180,7 @@ const PaymentPage = ({ username }) => {
                         </div>
 
                     </div>
-                    <div className='bg-gray-500/20  w-1/2 rounded-lg'>
+                    <div className='bg-gray-500/20  md:w-1/2 rounded-lg'>
                         <div className='font-bold px-3 py-2 text-md'>Make a Payment</div>
                         <div>
                             <div className='flex flex-col gap-3 px-5 py-3'>

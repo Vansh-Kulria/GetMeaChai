@@ -61,7 +61,7 @@ export const updateProfile = async (data, oldusername) => {
         }
         await User.updateOne({ email : ndata.email }, ndata);
         // update oldusername payment to new username
-        
+        await Payment.updateMany({ to_user: oldusername }, { to_user: ndata.username});
 
     }
     else{

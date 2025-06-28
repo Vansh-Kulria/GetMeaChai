@@ -199,10 +199,31 @@ const PaymentPage = ({ username }) => {
                                             theme: "dark",
                                             transition: Bounce,
                                         });
+
+                                        return
+                                    }
+
+                                    if (paymentform.amount == 0 ) {
+
+                                        toast.error('Amount cannot be zero', {
+                                            position: "top-right",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: false,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                            theme: "dark",
+                                            transition: Bounce,
+                                        });
+                                        
+
+                                    
                                         return; // Prevent pay() from running
                                     }
                                     pay((paymentform.amount) * 100);
                                 }}
+
                                 type="button"
                                 className="text-white  w-full bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl
                 focus:ring-2 focus:outline-none focus:ring-gray-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 cursor-pointer

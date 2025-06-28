@@ -1,8 +1,8 @@
-import { connect } from "mongoose";
-import NextAuth from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
-import User from "@/models/User";
-// import Payment from "@/models/Payment";
+// pages/api/auth/[...nextauth].js
+import { connect } from "mongoose"
+import NextAuth from "next-auth"
+import GitHubProvider from "next-auth/providers/github"
+import User from "@/models/User"
 
 export const authOptions = {
   providers: [
@@ -11,39 +11,41 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
-
-
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user, account }) {
       if (account.provider === "github") {
-        // connect to the database
-        const db = await connect(process.env.MONGODB_URI);
-        // check if the user already exists in the database
-        const currentUser = await User.findOne({ email: user.email });
-        if (!currentUser) {
-          // if the user doesn't exist, create a new user
-          const newUser = new User({
-            username: user.email.split('@')[0],
+        await connect(process.env.MONGODB_URI)
+        let dbUser = await User.findOne({ email: user.email })
+        if (!dbUser) {
+          dbUser = await User.create({
+            username: user.email.split("@")[0],
             email: user.email,
           })
-          await newUser.save();
-          user.name = newUser.username
         }
-        else{
-          user.name = currentUser.username
-        }
+        user.id = dbUser._id.toString()
       }
       return true
-    }
-  },
-
-  async session ({ session, user, token }) {
-    const dbUser = await User.findOne({ email: user.email });
-    session.user.name = dbUser.username
-    return session
     },
-};
+    
+    async jwt({ token, user }) {
+      if (user?.id) token.sub = user.id
+      return token
+    },
+    async session({ session, token }) {
+      await connect(process.env.MONGODB_URI)
+      const dbUser = await User.findById(token.sub)
+      session.user = {
+        id: dbUser._id.toString(),
+        name: dbUser.username,
+        email: dbUser.email,
+      }
+      return session
+    },
+  },
+}
 
-const handler = NextAuth(authOptions);
-
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOptions)
+export { handler as GET, handler as POST }

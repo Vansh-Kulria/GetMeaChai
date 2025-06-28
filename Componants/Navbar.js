@@ -11,7 +11,8 @@ const Navbar = () => {
     const pathname = usePathname()
 
     return (
-        <nav className="bg-gray-600/30 text-white py-3 px-3 flex justify-between items-center h-15 ">
+        <>
+        <nav className="bg-gray-800/60 backdrop-blur-2xl text-white py-3 px-3 flex justify-between items-center h-16 fixed w-full top-0 z-50">
 
             <div className="logo">
                 <Link href="/" className="text-2xl font-bold">
@@ -56,28 +57,28 @@ const Navbar = () => {
                             setIsOpen(false)
                         }, 1000) } >
                         {isOpen && (
-                            <div  className="absolute z-10 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700 right-0">
+                            <div  className="absolute z-10 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700/70 backdrop-blur right-0">
                                 <ul 
                                 
                                 className="py-2 text-sm text-gray-700 dark:text-gray-200">
                                     <li>
-                                        <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600/80 dark:hover:text-white">
                                             Dashboard
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <Link href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600/80 dark:hover:text-white">
                                             Home
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={`/user/${session.user.name}`} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <Link href={`/user/${session.user.name}`} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600/80 dark:hover:text-white">
                                             Your page
                                         </Link>
                                     </li>
                                    
                                     <li>
-                                        <div onClick={() => signOut()}  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <div onClick={() => signOut()}  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600/80 dark:hover:text-white">
                                             Sign out
                                         </div>
                                     </li>
@@ -104,6 +105,7 @@ const Navbar = () => {
             </div>
 
         </nav>
+        </>
     )
 }
 

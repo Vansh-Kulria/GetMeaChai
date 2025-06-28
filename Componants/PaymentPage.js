@@ -13,7 +13,7 @@ import { useSearchParams } from 'next/navigation'
 
 
 const PaymentPage = ({ username }) => {
-    // const { data: session } = useSession()
+    
     const [paymentform, setpaymentform] = useState({})
     const [currentUser, setcurrentUser] = useState({})
     const [Payments, setPayments] = useState([])
@@ -101,6 +101,24 @@ const PaymentPage = ({ username }) => {
         } else {
             alert("Razorpay SDK failed to load. Are you online?");
         }
+    }
+
+    if (status === "loading") {
+        return <div className='flex justify-center items-center min-h-[calc(100vh-148px)]'>
+            <div className="card">
+                <div className="loader">
+                    <p>loading</p>
+                    <div className="words">
+                        <span className="word">buttons</span>
+                        <span className="word">forms</span>
+                        <span className="word">switches</span>
+                        <span className="word">cards</span>
+                        <span className="word">buttons</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     }
 
 

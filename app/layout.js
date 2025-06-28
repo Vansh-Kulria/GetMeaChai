@@ -37,8 +37,8 @@ export default function RootLayout({ children }) {
       >
         <SessionWrapper>
 
-          <div className="min-h-[84.96vh] text-white overflow-hidden relative"
-          >
+            <Navbar />
+          <div className=" text-white overflow-hidden relative pt-16">
             <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))] -z-10"></div><div className="absolute bottom-0 right-[-20%] top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))] -z-10"></div>
             <ToastContainer
               position="top-right"
@@ -53,10 +53,12 @@ export default function RootLayout({ children }) {
               theme="colored"
               transition={Bounce}
             />
-            <Navbar />
-            {children}
+            <div className="min-h-[calc(100vh-152px)]">
+              {children}
+            </div>
+            
           </div>
-          <Footer />
+            <Footer />
         </SessionWrapper>
 
       </body>

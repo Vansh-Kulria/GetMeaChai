@@ -22,6 +22,7 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
+        document.title = "Dashboard | GetMeAChai";
         if (status === "authenticated" && session?.user?.name) {
             getData();
         }
@@ -151,3 +152,5 @@ const Dashboard = () => {
 }
 
 export default Dashboard
+
+

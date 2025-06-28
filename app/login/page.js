@@ -1,4 +1,5 @@
 "use client"
+
 import React, { useEffect } from 'react'
 import { useSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -8,6 +9,7 @@ const page = () => {
     const router = useRouter()
 
     useEffect(() => {
+        document.title = "Login | GetMeAChai";
         if (session) {
             router.replace('/dashboard')
         }
@@ -155,3 +157,6 @@ const page = () => {
 }
 
 export default page
+
+
+   

@@ -8,6 +8,9 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-col gap-2 justify-center h-[45vh] items-center text-white md:container md:mx-auto mx-6">
+        <div className="logo w-15 md:w-20">
+          <img src="/chai.gif" alt="logo" />
+        </div>
         <div className='font-bold text-3xl '>Buy Me a Chai</div>
         <p className='text-gray-300 text-center'>A crowdfunding Platform for creators. Get funded by your fans and followers. <span className="text-lg font-bold text-white" >Start Now</span></p>
         <div className='flex md:flex-row gap-2 mt-4'>

@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
 
@@ -9,10 +9,18 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname()
-
+    const closeTimer = useRef(null);
+    
     // Close mobile menu on navigation
     const handleNavClick = () => setMobileMenuOpen(false);
+    const handleDropdownEnter = () => {
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        setIsOpen(true);
+    };
 
+    const handleDropdownLeave = () => {
+        closeTimer.current = setTimeout(() => setIsOpen(false), 120); // 120ms delay
+    };
     return (
         <>
         <nav className="bg-gray-800/60 backdrop-blur-2xl text-white py-3 px-3 flex justify-between items-center h-16 fixed w-full top-0 z-50">
@@ -36,16 +44,18 @@ const Navbar = () => {
             </button> )}
 
             {/* Desktop Menu */}
-            <div className="hidden md:block">
+           <div className="hidden md:block">
                 {session ? (
                     <div
-                        className="relative inline-block text-left"
-                        onMouseEnter={() => setIsOpen(true)}
-                        onMouseLeave={() => setIsOpen(false)}
+                        className="relative inline-block text-left backdrop-blur-2xl"
+                        onMouseEnter={handleDropdownEnter}
+                        onMouseLeave={handleDropdownLeave}
                     >
                         <button
                             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             type="button"
+                            aria-haspopup="true"
+                            aria-expanded={isOpen}
                         >
                             Welcome, {session.user.name}!
                             <svg
@@ -65,7 +75,11 @@ const Navbar = () => {
                             </svg>
                         </button>
                         {isOpen && (
-                            <div className="absolute z-10 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700/70 backdrop-blur right-0">
+                            <div
+                                className="absolute z-10 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700/95  right-0 backdrop-blur-lg"
+                                onMouseEnter={handleDropdownEnter}
+                                onMouseLeave={handleDropdownLeave}
+                            >
                                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                                     <li>
                                         <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600/80 dark:hover:text-white">
@@ -78,9 +92,9 @@ const Navbar = () => {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={`/user/${session.user.name}`} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600/80 dark:hover:text-white">
+                                        <a href={`/user/${session.user.name}`} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600/80 dark:hover:text-white">
                                             Your page
-                                        </Link>
+                                        </a>
                                     </li>
                                     <li>
                                         <div onClick={() => signOut()} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600/80 dark:hover:text-white cursor-pointer">

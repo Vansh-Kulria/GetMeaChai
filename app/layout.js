@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/Componants/Navbar";
 import Footer from "@/Componants/Footer";
 import SessionWrapper from "@/Componants/SessionWrapper";
+import { ToastContainer } from "react-toastify";
+import { Bounce } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,11 +36,23 @@ export default function RootLayout({ children }) {
         dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 `}
       >
         <SessionWrapper>
-          
+
           <div className="min-h-[84.96vh] text-white overflow-hidden relative"
           >
             <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))] -z-10"></div><div className="absolute bottom-0 right-[-20%] top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))] -z-10"></div>
-
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+              transition={Bounce}
+            />
             <Navbar />
             {children}
           </div>

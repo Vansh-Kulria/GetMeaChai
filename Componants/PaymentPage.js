@@ -7,6 +7,9 @@ import { useSession } from 'next-auth/react'
 import { fetchpayment, fetchuser } from '@/acitons/userAction'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Bounce } from 'react-toastify'
+import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 
 const PaymentPage = ({ username }) => {
@@ -14,12 +17,32 @@ const PaymentPage = ({ username }) => {
     const [paymentform, setpaymentform] = useState({})
     const [currentUser, setcurrentUser] = useState({})
     const [Payments, setPayments] = useState([])
-    const [Error, setError] = useState("")
+    const searchParams = useSearchParams()
+    const router = useRouter()
+   
 
     useEffect(() => {
         getData()
+
     }, [])
 
+    useEffect (() =>{
+        if(searchParams.get("paymentdone") == "true"){
+            toast.success("Thanks for your donation!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme : "dark",
+                transition: Bounce
+                });
+            }
+
+            router.push(`/user/${username}`)
+    },[])
 
     const handleChange = (e) => {
         if (e.target.name === "amount") {
@@ -40,7 +63,6 @@ const PaymentPage = ({ username }) => {
         setcurrentUser(u)
         let dbpayments = await fetchpayment(username)
         setPayments(dbpayments)
-        console.log(u, dbpayments)
     }
 
     const { data: session, status } = useSession()
@@ -52,7 +74,7 @@ const PaymentPage = ({ username }) => {
         console.log(a)
 
         var options = {
-            "key": process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+            "key": currentUser.razorpay_id, // Enter the Key ID generated from the Dashboard
             "amount": amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": "INR",
             "name": "Get me a chai", //your business name
@@ -86,27 +108,15 @@ const PaymentPage = ({ username }) => {
     return (
         <>
             <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
-            
-             <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
 
-            />
+            
 
             <div>
                 <div className="cover-pic relative w-full ">
-                    <img className='object-cover w-full h-[45vh]' src="https://images.pexels.com/photos/1097456/pexels-photo-1097456.jpeg" alt="Cover picture" />
+                    <img className='object-cover w-full h-[45vh]' src={currentUser.cover_pic} alt="Cover picture" />
 
                     <div className='w-full flex justify-center '>
-                        <img className="w-20 rounded-full h-20 object-cover absolute -bottom-10 border" src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg" alt="profile picture" />
+                        <img className="w-20 rounded-full h-20 object-cover absolute -bottom-10 border" src={currentUser.profile_pic} alt="profile picture" />
 
                     </div>
 
@@ -118,10 +128,10 @@ const PaymentPage = ({ username }) => {
 
                 <div className='flex flex-col justify-center items-center text-gray-400/50 text-xs gap-1 mt-2 '>
                     <div>
-                        Creating Animated art for VTT's
+                        lets help {username} get a chai!
                     </div>
                     <div>
-                        9,456 members . 82 posts . $15,450/relese
+                        {Payments.length} Payments . {currentUser.name} has raised ₹{Payments.reduce((a, b) => a + b.amount, 0).toLocaleString('en-IN')}
                     </div>
                 </div>
 
@@ -143,7 +153,7 @@ const PaymentPage = ({ username }) => {
                             ) : (
                                 Payments.map((payment, idx) => (
                                     <div key={payment._id || idx}>
-                                        {payment.name} donated <span className='font-bold text-gray-300'>₹{payment.amount}</span>
+                                        {payment.name} donated <span className='font-bold text-gray-300'>₹{(payment.amount).toLocaleString('en-IN')}</span>
                                         {payment.message && <span>
                                             {` with a message "${payment.message}"`}</span>}
                                     </div>
@@ -177,14 +187,21 @@ const PaymentPage = ({ username }) => {
                             <button
                                 onClick={() => {
                                     if (!paymentform.name || !paymentform.message || !paymentform.amount) {
-                                        
-                                        toast.error("Please fill all fields before paying.", {
+
+                                        toast.error('Fill all the fields', {
                                             position: "top-right",
                                             autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: false,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                            theme: "dark",
+                                            transition: Bounce,
                                         });
                                         return; // Prevent pay() from running
                                     }
-                                    pay(paymentform.amount);
+                                    pay((paymentform.amount) * 100);
                                 }}
                                 type="button"
                                 className="text-white  w-full bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl

@@ -14,21 +14,21 @@ import { useSearchParams } from 'next/navigation'
 
 
 const PaymentPage = ({ username }) => {
-
+    
     const [paymentform, setpaymentform] = useState({})
     const [currentUser, setcurrentUser] = useState({})
     const [Payments, setPayments] = useState([])
     const searchParams = useSearchParams()
     const router = useRouter()
-
+   
 
     useEffect(() => {
         getData()
 
     }, [])
 
-    useEffect(() => {
-        if (searchParams.get("paymentdone") == "true") {
+    useEffect (() =>{
+        if(searchParams.get("paymentdone") == "true"){
             toast.success("Thanks for your donation!", {
                 position: "top-right",
                 autoClose: 5000,
@@ -37,13 +37,13 @@ const PaymentPage = ({ username }) => {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "dark",
+                theme : "dark",
                 transition: Bounce
-            });
-        }
+                });
+            }
 
-        router.push(`/user/${username}`)
-    }, [])
+            router.push(`/user/${username}`)
+    },[])
 
     const handleChange = (e) => {
         if (e.target.name === "amount") {
@@ -128,18 +128,12 @@ const PaymentPage = ({ username }) => {
         <>
             <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
 
-
+            
 
             <div>
                 <div className="cover-pic relative w-full ">
                     <img className='object-cover w-full h-[40vh] md:h-[45vh]' src={currentUser.cover_pic} alt="Cover picture" />
-                    <Image className='object-cover w-full h-[40vh] md:h-[45vh]'
-                        src={currentUser.cover_pic}
-                        alt="Cover picture"
-                        width={500}             
-                        height={300}            
-                        priority                // Optional: preload image
-                    />
+
                     <div className='w-full flex justify-center '>
                         <img className="w-20 rounded-full h-20 object-cover absolute -bottom-10 border" src={currentUser.profile_pic} alt="profile picture" />
 
@@ -228,7 +222,7 @@ const PaymentPage = ({ username }) => {
                                         return
                                     }
 
-                                    if (paymentform.amount == 0) {
+                                    if (paymentform.amount == 0 ) {
 
                                         toast.error('Amount cannot be zero', {
                                             position: "top-right",
@@ -241,9 +235,9 @@ const PaymentPage = ({ username }) => {
                                             theme: "dark",
                                             transition: Bounce,
                                         });
+                                        
 
-
-
+                                    
                                         return; // Prevent pay() from running
                                     }
                                     pay((paymentform.amount) * 100);

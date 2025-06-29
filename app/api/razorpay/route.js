@@ -42,7 +42,7 @@ export const POST = async (req) => {
     if (isValid) {
       const updatedPayment = await Payment.findOneAndUpdate(
         { oId: razorpay_order_id },
-        { done: "true" },
+        { done: true },
         { new: true }
       );
 

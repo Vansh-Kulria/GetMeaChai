@@ -40,19 +40,15 @@ export const POST = async (req) => {
     );
 
     if (isValid) {
-  const updatedPayment = await Payment.findOneAndUpdate(
-    { oId: razorpay_order_id },
-    { done: true },
-    { new: true }
-  ).select('to_user'); // Ensure to_user is included
-
-  // Fallback: if to_user is still missing, use the original payment object
-  const toUser = updatedPayment?.to_user || p.to_user;
-
-  return NextResponse.redirect(
-    `${process.env.NEXTAUTH_URL}/user/${toUser}?paymentdone=true`
-  );
-
+      const updatedPayment = await Payment.findOneAndUpdate(
+        { oId: razorpay_order_id },
+        { done: true },
+        { new: true }
+      );
+      
+      return NextResponse.redirect(
+        `${process.env.NEXTAUTH_URL}/user/${updatedPayment.to_user}?paymentdone=true`
+      );
     } else {
       return NextResponse.json({ success: false, message: "Payment verification failed" });
     }

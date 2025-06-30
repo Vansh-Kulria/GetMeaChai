@@ -1,14 +1,8 @@
-
+import PaymentPage from '@/Componants/PaymentPage'
 import React from 'react'
 import { notFound } from 'next/navigation'
 import User from '@/models/User'
 import { connect } from 'mongoose'
-import dynamic from 'next/dynamic';
-
-const PaymentPage = dynamic(() => import('@/components/PaymentPage'), {
-  loading: () => <p>Loading Your Page...</p>,
-  ssr: false,
-});
 
 const Username = async ({ params }) => {
   // if the username is not present in the database, show 404 page

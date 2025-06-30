@@ -82,7 +82,7 @@ const PaymentPage = ({ username }) => {
             "description": "Transaction",
             "image": "/chai.png",
             "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "callback_url": `${process.env.NEXTAUTH_URL}/api/razorpay`,
+            "callback_url": `${process.env.NEXT_PUBLIC_BASE_URL}/api/razorpay`,
             "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
                 "name": session.user.name, //your customer's name
                 "email": session.user.email,
